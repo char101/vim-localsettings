@@ -35,4 +35,7 @@ def apply_settings():
         settings = localsettings.get('global', {})
         settings.update(localsettings.get(buf.options['filetype'], {}))
         for k, v in settings.items():
-            vim.command('setlocal {}={}'.format(k, v))
+            if v == '':
+                vim.command('setlocal {}')
+            else:
+                vim.command('setlocal {}={}'.format(k, v))
