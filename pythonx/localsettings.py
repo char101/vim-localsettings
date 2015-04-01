@@ -19,7 +19,7 @@ def load_settings(file):
         settings_file = os.path.join(dir, '.localsettings')
         if os.path.isfile(settings_file):
             cp = ConfigParser()
-            cp.read([file])
+            cp.read([settings_file])
             settings = {s: dict(cp.items(s)) for s in cp.sections()}
             cache[dir + os.sep] = settings
             return settings
@@ -36,6 +36,6 @@ def apply_settings():
         settings.update(localsettings.get(buf.options['filetype'], {}))
         for k, v in settings.items():
             if v == '':
-                vim.command('setlocal {}')
+                vim.command('setlocal {}'.format(k))
             else:
                 vim.command('setlocal {}={}'.format(k, v))
